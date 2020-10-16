@@ -304,14 +304,6 @@ curl -X POST \
 "quiz_category": {"type": "Art", "id": 2}
 }'
 ```
-    {
-      "answer": "Alexander Fleming", 
-      "category": 1, 
-      "difficulty": 3, 
-      "id": 21, 
-      "question": "Who discovered penicillin?"
-    },
-
 
 ```bash
 {
