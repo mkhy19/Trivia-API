@@ -109,7 +109,223 @@ The error codes currently returned are:
 * 422 – Not Processable
 * 500 – Internal Server Error
 
+### Endpoints
+#### GET /categories
+* General: Return all categories in object with ```key:value```
+* Sample: ```bash curl http://127.0.0.1:5000/categories```
+```bash
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "success": true
+}
 
+```
+
+#### GET /categories/<int:category_id>/questions
+* General: Get questions in a specific category
+* Sample: ```curl http://127.0.0.1:5000/categories/1/questions ```
+```bash
+{
+  "current_category": "Science",
+  "questions": [
+    {
+      "answer": "The Liver", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 20, 
+      "question": "What is the heaviest organ in the human body?"
+    }, 
+    {
+      "answer": "Alexander Fleming", 
+      "category": 1, 
+      "difficulty": 3, 
+      "id": 21, 
+      "question": "Who discovered penicillin?"
+    }, 
+    {
+      "answer": "Blood", 
+      "category": 1, 
+      "difficulty": 4, 
+      "id": 22, 
+      "question": "Hematology is a branch of medicine involving the study of what?"
+    }
+  ], 
+  "success": true,
+  "total_questions": 3
+}
+
+```
+
+#### GET /questions
+- General:  
+    - Return categories, list of questions and the questions that are paginated in group of 10 starting from 1
+
+- Sample: ```bash curl http://127.0.0.1:5000/questions```
+```bash
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  },  
+  "questions": [
+    {
+      "answer": "Muhammad Ali", 
+      "category": 4, 
+      "difficulty": 1, 
+      "id": 9, 
+      "question": "What boxer's original name is Cassius Clay?"
+    }, 
+    {
+      "answer": "Apollo 13", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 2, 
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }, 
+    {
+      "answer": "Tom Cruise", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 4, 
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    }, 
+    {
+      "answer": "Edward Scissorhands", 
+      "category": 5, 
+      "difficulty": 3, 
+      "id": 6, 
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    }, 
+    {
+      "answer": "Brazil", 
+      "category": 6, 
+      "difficulty": 3, 
+      "id": 10, 
+      "question": "Which is the only team to play in every soccer World Cup tournament?"
+    }, 
+    {
+      "answer": "Uruguay", 
+      "category": 6, 
+      "difficulty": 4, 
+      "id": 11, 
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    }, 
+    {
+      "answer": "George Washington Carver", 
+      "category": 4, 
+      "difficulty": 2, 
+      "id": 12, 
+      "question": "Who invented Peanut Butter?"
+    }, 
+    {
+      "answer": "Lake Victoria", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 13, 
+      "question": "What is the largest lake in Africa?"
+    }, 
+    {
+      "answer": "The Palace of Versailles", 
+      "category": 3, 
+      "difficulty": 3, 
+      "id": 14, 
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    }, 
+    {
+      "answer": "Agra", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 15, 
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 21
+}
+
+```
+
+#### POST /questions
+- General: 
+    - Creates a new question
+- Sample: ```curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d 
+            '{'question': "What is your best movie?",
+            'answer': "The dark night",
+            'difficulty': "1",
+            'category': 5}' ```
+
+```bash
+{
+  "questions": [
+    {
+      "answer": "The dark night", 
+      "category": 5, 
+      "difficulty": 1, 
+      "id": 7, 
+      "question": "What is your best movie?"
+    }
+  ],
+  "success": true,
+}
+```
+
+#### DELETE /questions/<int:question_id>
+- General: Deletes the question of the given ID if it exists, Returns the id of the deleted question, success value.
+
+- Sample ```curl -X DELETE http://127.0.0.1:5000/questions/7```
+
+```bash 
+{
+  "success": true
+}
+```
+
+#### POST /quizzes
+- General: 
+    - Take previous_questions in random category in the request
+    - Returns random question and success value
+- Sample: 
+```bash
+curl -X POST \
+  http://127.0.0.1:5000/quizzes \
+  -H 'content-type: application/json' \
+  -d '{"previous_questions": [],
+"quiz_category": {"type": "Art", "id": 2}
+}'
+```
+    {
+      "answer": "Alexander Fleming", 
+      "category": 1, 
+      "difficulty": 3, 
+      "id": 21, 
+      "question": "Who discovered penicillin?"
+    },
+
+
+```bash
+{
+  "question": {
+    "answer": "Muhammad Ali", 
+    "category": 4, 
+    "difficulty": 1, 
+    "id": 9, 
+    "question": "What boxer's original name is Cassius Clay?"
+  }, 
+  "success": true
+}
+
+```
 ## Deployment N/A
 
 ## Authors
